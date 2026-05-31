@@ -1,0 +1,45 @@
+/*ページ全体*/
+body{
+    text-align:center;
+}
+
+/*タイトル、スコア表示エリア*/
+.header{
+    border:1px solid black;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/*header内のスコア表示*/
+.score{
+	border:1px solid black;
+    padding:10px;
+}
+
+/*手を選択するエリア*/
+.game-area{
+    border:1px solid red;
+}
+
+/*ルール表示エリア*/
+.footer{
+    border:1px solid blue;
+}
+
+/*上段の手*/
+.top{
+    margin-bottom:30px;
+}
+
+/*下段の手*/
+.bottom{
+    display:flex;
+    justify-content:space-around;
+}
+
+/*ボタン*/
+button{
+    width:100px;
+    height:100px;
+}

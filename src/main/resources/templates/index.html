@@ -1,18 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>じゃんけん</title>
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
-<h1>じゃんけんゲーム</h1>
-
-<form action="/play" method="post">
-    <button type="submit" name="hand" value="gu">gu-</button>
-    <button type="submit" name="hand" value="choki">チョキ</button>
-    <button type="submit" name="hand" value="pa">パー</button>
-</form>
+	<!--ヘッダー-->
+	<div class="header">
+		<div class="title">
+			ROCK <br>
+			PAPER <br>
+			SCISSORS
+		</div>
+		
+		<div class="score">
+			SCORE
+			<p>0</p>
+		</div>
+	</div>
+	<!--ゲームエリア-->
+	<div class="game-area">
+		<form action="/play" method="post">
+			<!--上段の手-->
+			<div class="top">
+				<div class="scissors">
+					<button type="submit" name="hand" value="チョキ">
+						チョキ
+					</button>
+				</div>
+			</div>
+			<!--下段の手-->
+			<div class="bottom">
+				<div class="rock">
+					<button type="submit" name="hand" value="グー">
+						グー
+					</button>
+				</div>
+				<div class="paper">
+					<button type="submit" name="hand" value="パー">
+						パー
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!--Modelに格納された値を表示（選択した手の表示）-->
+	<div class="result">
+		<p th:text="${hand}"></p>
+	</div>
+	<!--ルール表示-->
+	<div class="footer">
+		RULES
+	</div>
 
 </body>
 </html>
