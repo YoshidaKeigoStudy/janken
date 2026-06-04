@@ -4,29 +4,34 @@ import java.util.Random;
 
 @Service
 public class JankenService {
-	public String cpuHand() {
-		/** 変数宣言 **/
+	/** 定数宣言 **/
+	private static final int ROCK = 0;
+	private static final int SCISSORS = 1;
+	private static final int PAPER = 2;
+	
+	//CPUの手を取得するメソッド
+	public String getCpuHand() {
+		/** 乱数生成 **/
 		Random rand = new Random();
 		int handNum = rand.nextInt(3);
-		String cpuHand = null;
-		
-		/** メソッド呼び出し **/
-		cpuHand = setCpuHand(handNum);
+
+		//CPUの手の文字列を取得
+		String cpuHand = convertCpuHand(handNum);
 		
 		return cpuHand;
 	}
 	
-	//乱数からCPUの手を生成するメソッド
-	public String setCpuHand(int handNum) {
+	//乱数からCPUの手の文字列に変換するメソッド
+	public String convertCpuHand(int handNum) {
 		String cpuHand = null;
 		switch(handNum) {
-		case 0:
+		case ROCK:
 			cpuHand = "グー";
 			break;
-		case 1:
+		case SCISSORS:
 			cpuHand = "チョキ";
 			break;
-		case 2:
+		case PAPER:
 			cpuHand = "パー";
 			break;
 		}

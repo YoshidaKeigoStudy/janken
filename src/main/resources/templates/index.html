@@ -27,7 +27,7 @@
 			<div class="top">
 				<div class="scissors">
 					<button type="submit" name="hand" value="チョキ">
-						チョキ
+						<img th:src="@{/images/janken_choki.png}" class="jankenHand">
 					</button>
 				</div>
 			</div>
@@ -35,12 +35,12 @@
 			<div class="bottom">
 				<div class="rock">
 					<button type="submit" name="hand" value="グー">
-						グー
+						<img th:src="@{/images/janken_gu.png}" class="jankenHand">
 					</button>
 				</div>
 				<div class="paper">
 					<button type="submit" name="hand" value="パー">
-						パー
+						<img th:src="@{/images/janken_pa.png}" class="jankenHand">
 					</button>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 		<p th:text="${cpuHand}"></p>
 	</div>
 	<!--勝敗結果の表示-->
-	<div class="judge">
+	<div class="judgeResult">
 		<p th:text="${judgeResult}"></p>
 	</div>
 	<!--ルール表示-->

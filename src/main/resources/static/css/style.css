@@ -1,6 +1,7 @@
 /*ページ全体*/
 body{
     text-align:center;
+	background-color: aliceblue;
 }
 
 /*タイトル、スコア表示エリア*/
@@ -40,6 +41,22 @@ body{
 
 /*ボタン*/
 button{
-    width:100px;
-    height:100px;
+	/* 背景色を無色に */
+	background: transparent;
+	/* 枠線を消す */
+	border: none;
+	/* クリックした際に枠線をnone消す */
+	outline: none;
+	/* 影を消す */
+	box-shadow: none;
+}
+
+/*画像*/
+.jankenHand{
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+}
+.jankenHand:hover{
+	transform: scale(1.1);
 }

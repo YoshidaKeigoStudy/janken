@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.service.JankenService;
-import com.example.demo.service.WinLoseJudgeService;
+import com.example.demo.service.JudgeWinLoseService;
 
 @Controller
 public class JankenController {
@@ -16,7 +16,7 @@ public class JankenController {
 	@Autowired//DI注入アノテーション
 	private JankenService jankenService;
 	@Autowired
-	private WinLoseJudgeService winLoseJudgeService;
+	private JudgeWinLoseService judgeWinLoseService;
 	
 	//初期表示
 	@GetMapping("/")
@@ -29,16 +29,15 @@ public class JankenController {
 	public String play(@RequestParam("hand") String hand, Model model) {
 		/** 変数宣言 **/
 		String cpuHand;		//CPUの手
-		String judge;		//勝敗判定
+		String judgeResult;		//勝敗判定
 		
 		/** 値の注入 **/
-		cpuHand = jankenService.cpuHand();	//jankenServiceクラスのcpuHandメソッドからCPUの手を取得
-		judge = winLoseJudgeService.winLoseJudge(hand, cpuHand);		//勝敗判定の値取得
+		cpuHand = jankenService.getCpuHand();						//jankenServiceクラスのgetCpuHandメソッドからCPUの手を取得
+		judgeResult = judgeWinLoseService.judgeWinLose(hand, cpuHand);	//勝敗判定の値取得
 		
-		//画面に渡す値を詰める
 		model.addAttribute("hand", hand);
 		model.addAttribute("cpuHand", cpuHand);
-		model.addAttribute("judgeResult", judge);
+		model.addAttribute("judgeResult", judgeResult);
 		
 		return "index";
 	}
