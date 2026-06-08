@@ -12,7 +12,10 @@ public class JudgeWinLoseService {
 	public String judgeWinLose(String userHand, String cpuHand) {
 		int userNum = convertHand(userHand);	//ユーザーの手の置換
 		int cpuNum = convertHand(cpuHand);		//CPUの手の置換
-		
+
+		// TODO: convertHandが-1を返した場合（不正な入力）のチェックがない。
+		//       IllegalArgumentExceptionをスローする等の防御的実装を検討する。
+
 		//勝敗の判定ロジック（勝ちパターンの列挙、あいこ、それ以外を負け）
 		if((userNum == ROCK && cpuNum == SCISSORS) || (userNum == SCISSORS && cpuNum == PAPER) || (userNum == PAPER && cpuNum == ROCK)) {
 			return "You Win";
@@ -23,6 +26,8 @@ public class JudgeWinLoseService {
 		}
 	}
 	
+	// TODO: このメソッドはjudgeWinLose()の内部処理用なので、publicではなくprivateにすべき。
+	// TODO: ROCK/SCISSORS/PAPERの定数がJankenServiceにも重複定義されている。enumにまとめることを検討する。
 	//手の文字列をもとに計算用の数値をセット
 	public int convertHand(String hand) {
 		switch(hand) {
