@@ -46,6 +46,9 @@
 			</div>
 		</form>
 	</div>
+	<!-- TODO: th:ifでjudgeResultがある場合のみ表示し、初期表示時に空欄が見えないようにする -->
+	<!-- TODO: class="result"が重複しているため、"user-hand"と"cpu-hand"等に分けてCSSで個別スタイルを当てられるようにする -->
+	<!-- TODO: テキストだけでなく、選択した手の画像も表示するとUIとして自然になる -->
 	<!--Modelに格納された値を表示（選択した手の表示）-->
 	<div class="result">
 		<p th:text="${hand}"></p>
@@ -58,6 +61,8 @@
 	<div class="judgeResult">
 		<p th:text="${judgeResult}"></p>
 	</div>
+	<!-- TODO: SCOREが固定値0のままなので、勝敗に応じてスコアを更新する（セッション等で管理） -->
+	<!-- TODO: RULESの内容が未実装。グー＞チョキ、チョキ＞パー、パー＞グー等のルール説明を追加する -->
 	<!--ルール表示-->
 	<div class="footer">
 		RULES
