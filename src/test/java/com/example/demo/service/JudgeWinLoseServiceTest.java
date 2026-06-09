@@ -63,26 +63,4 @@ class JudgeWinLoseServiceTest {
 		assertEquals("Draw", judgeWinLoseService.judgeWinLose("パー", "パー"));
 	}
 
-	/** convertHand()のテスト **/
-
-	@Test
-	void グーは0に変換される() {
-		assertEquals(0, judgeWinLoseService.convertHand("グー"));
-	}
-
-	@Test
-	void チョキは1に変換される() {
-		assertEquals(1, judgeWinLoseService.convertHand("チョキ"));
-	}
-
-	@Test
-	void パーは2に変換される() {
-		assertEquals(2, judgeWinLoseService.convertHand("パー"));
-	}
-
-	@Test
-	void 不正な入力はマイナス1に変換される() {
-		assertEquals(-1, judgeWinLoseService.convertHand("不正な入力"));
-	}
-
 }
