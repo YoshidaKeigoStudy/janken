@@ -15,13 +15,13 @@ public class JankenService {
 	// 例: private final Random rand = new Random();
 
 	//CPUの手を取得するメソッド
-	public String getCpuHand() {
+	public Hand getCpuHand() {
 		/** 乱数生成 **/
 		Random rand = new Random();
 		int handNum = rand.nextInt(3);
 
-		//CPUの手の文字列を取得
-		String cpuHand = convertCpuHand(handNum);
+		//CPUの手を取得
+		Hand cpuHand = convertCpuHand(handNum);
 		
 		return cpuHand;
 	}
@@ -30,19 +30,16 @@ public class JankenService {
 	// TODO: switchのdefaultがないため、想定外のhandNumが渡された場合にnullが返る。
 	//       defaultでIllegalArgumentExceptionをスローする等の防御的実装を検討する。
 	//乱数からCPUの手の文字列に変換するメソッド
-	public String convertCpuHand(int handNum) {
-		String cpuHand = null;
+	private Hand convertCpuHand(int handNum) {
 		switch(handNum) {
 		case ROCK:
-			cpuHand = "グー";
-			break;
+			return Hand.ROCK;
 		case SCISSORS:
-			cpuHand = "チョキ";
-			break;
+			return Hand.SCISSORS;
 		case PAPER:
-			cpuHand = "パー";
-			break;
+			return Hand.PAPER;
+		default:
+			return null;
 		}
-		return cpuHand;
 	}
 }
