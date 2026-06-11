@@ -28,14 +28,9 @@ public class JankenController {
 	//画面から選択された手を受け取り、Modelに詰めて画面へ渡す
 	@PostMapping("/play")
 	public String play(@RequestParam("hand") String hand, Model model) {
-		/** 変数宣言 **/
-		Hand userHand = Hand.fromString(hand);
-		Hand cpuHand;			//CPUの手
-		String judgeResult;		//勝敗判定
-		
-		/** 値の注入 **/
-		cpuHand = jankenService.getCpuHand();							//jankenServiceクラスのgetCpuHandメソッドからCPUの手を取得
-		judgeResult = judgeWinLoseService.judgeWinLose(userHand, cpuHand);	//勝敗判定の値取得
+		Hand userHand = Hand.fromString(hand);		//ユーザの手を取得（String型handを、fromStringメソッドでHand型に変換して取得）
+		Hand cpuHand = jankenService.getCpuHand();	//CPUの手を取得（getCpuHandメソッドでCPUの手を取得）
+		String judgeResult = judgeWinLoseService.judgeWinLose(userHand, cpuHand);	//勝敗判定の値取得（ユーザーとCPUの手を渡して判定）
 		
 		model.addAttribute("hand", hand);
 		model.addAttribute("cpuHand", cpuHand);

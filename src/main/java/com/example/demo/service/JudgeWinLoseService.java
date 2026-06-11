@@ -12,15 +12,12 @@ public class JudgeWinLoseService {
 	private static final int DRAW = 0;
 	
 	public String judgeWinLose(Hand userHand, Hand cpuHand) {
-		int userNum = userHand.getValue();	//ユーザーの手の置換
-		int cpuNum = cpuHand.getValue();		//CPUの手の置換
-		int judgeResult = judgeCulc(userNum, cpuNum);
-		
+		/** 渡されてきた手に対応する値(value)を取得 **/
+		int userNum = userHand.getValue();
+		int cpuNum = cpuHand.getValue();
+		int judgeResult = judgeCalc(userNum, cpuNum);	//ユーザとCPUの数値をもとに勝敗を産出
 
-		// TODO: convertHandが-1を返した場合（不正な入力）のチェックがない。
-		//       IllegalArgumentExceptionをスローする等の防御的実装を検討する。
-
-		//勝敗の判定ロジック（勝ちパターンの列挙、あいこ、それ以外を負け）
+		//勝敗結果に応じて文字列を返す
 		if(judgeResult == WIN) {
 			return "You Win";
 		}else if(judgeResult == LOSE){
@@ -28,13 +25,12 @@ public class JudgeWinLoseService {
 		}else {
 			return "Draw";
 		}
-		
 	}
 	
 	/** 勝敗判定を３パターンで行うための演算 **/
-	private int judgeCulc(int user, int cpu) {
-		int userMinusCpu;
-		userMinusCpu = user - cpu + CONVERTNATURALNUM;
+	private int judgeCalc(int user, int cpu) {
+		int userMinusCpu = user - cpu + CONVERTNATURALNUM;	//ユーザの手とCPUの手の差を算出し、自然数に変換
+		
 		if(userMinusCpu % 3 == 2) {
 			return WIN;
 		}else if(userMinusCpu % 3 == 1) {
@@ -42,8 +38,5 @@ public class JudgeWinLoseService {
 		}else {
 			return DRAW;
 		}
-		
-		
-		
 	}
 }

@@ -1,14 +1,13 @@
 package com.example.demo.model;
 
-import lombok.Getter;
-
 /** じゃんけんの手の列挙 **/
-@Getter
 public enum Hand{	
 	ROCK(0),
 	SCISSORS(1),
 	PAPER(2);
 	private final int value;
+	
+	/** コンストラクタ **/
 	private Hand(int value) {
 		this.value = value;
 	}
