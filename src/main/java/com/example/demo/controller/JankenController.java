@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.Hand;
+import com.example.demo.service.CalcScoreService;
 import com.example.demo.service.JankenService;
 import com.example.demo.service.JudgeWinLoseService;
+import com.example.demo.service.ScoreResetService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class JankenController {
@@ -18,6 +22,15 @@ public class JankenController {
 	private JankenService jankenService;
 	@Autowired
 	private JudgeWinLoseService judgeWinLoseService;
+	@Autowired
+	private CalcScoreService calcScoreService;
+	@Autowired
+	private ScoreResetService scoreResetService;
+	
+	/** 定数宣言 **/
+	private static final int WIN = 1;
+	private static final int LOSE = -1;
+	private static final int DRAW = 0;
 	
 	//初期表示
 	@GetMapping("/")
@@ -30,13 +43,36 @@ public class JankenController {
 	public String play(@RequestParam("hand") String hand, Model model) {
 		Hand userHand = Hand.fromString(hand);		//ユーザの手を取得（String型handを、fromStringメソッドでHand型に変換して取得）
 		Hand cpuHand = jankenService.getCpuHand();	//CPUの手を取得（getCpuHandメソッドでCPUの手を取得）
-		String judgeResult = judgeWinLoseService.judgeWinLose(userHand, cpuHand);	//勝敗判定の値取得（ユーザーとCPUの手を渡して判定）
+		int judgeResultNum = judgeWinLoseService.judgeWinLose(userHand, cpuHand);	//勝敗判定の値取得（ユーザーとCPUの手を渡して判定）
+		int score = calcScoreService.calcScore(judgeResultNum);	//勝敗結果の値を渡して得点を取得
+		int scoreReset = scoreResetService.scoreReset(score);
+		
+		
+		String judgeResult = convertJudge(judgeResultNum);	//数値を文字列に変換
 		
 		model.addAttribute("hand", hand);
 		model.addAttribute("cpuHand", cpuHand);
 		model.addAttribute("judgeResult", judgeResult);
+		model.addAttribute("score", score);
 		
 		return "index";
+	}
+	
+	//数値を文字列に変換
+	public String convertJudge(int judgeResultNum) {
+		if(judgeResultNum == WIN) {
+			return "You Win";
+		}else if(judgeResultNum == LOSE) {
+			return "You Lose";
+		}else {
+			return "Draw";
+		}
+	}
+	
+	@PostMapping("/reset")
+	public String reset(HttpSession session) {
+		session.setAttribute("score", 0);
+		return "redirect:/";
 	}
 }
 
