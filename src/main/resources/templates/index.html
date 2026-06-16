@@ -14,10 +14,14 @@
 			PAPER <br>
 			SCISSORS
 		</div>
-		
+		<div class="reset">
+			<button type="submit" name="reset">
+				スコアリセット
+			</button>
+		</div>
 		<div class="score">
 			SCORE
-			<p>0</p>
+			<p th:text="${score}"></p>
 		</div>
 	</div>
 	<!--ゲームエリア-->
