@@ -14,11 +14,13 @@
 			PAPER <br>
 			SCISSORS
 		</div>
-		<div class="reset">
-			<button type="submit" name="reset">
-				スコアリセット
-			</button>
-		</div>
+		<form action="/reset" method="post">
+			<div class="reset">
+				<button type="submit" name="reset">
+					スコアリセット
+				</button>
+			</div>
+		</form>
 		<div class="score">
 			SCORE
 			<p th:text="${score}"></p>

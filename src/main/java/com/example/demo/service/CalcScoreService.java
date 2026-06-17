@@ -8,12 +8,10 @@ public class CalcScoreService{
 	private static final int LOSE = -1;
 	private static final int DRAW = 0;
 	
-	private int score;
-	
-	public int calcScore(int judgeResultNum) {
+	public int calcScore(Integer nowScore, int judgeResultNum) {
 		if(judgeResultNum == WIN) {
-			score++;
+			nowScore += 1;
 			}
-		return score;
+		return nowScore;
 	}
 }
