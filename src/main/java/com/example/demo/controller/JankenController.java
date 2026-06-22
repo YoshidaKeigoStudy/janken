@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.Hand;
+import com.example.demo.model.GameResult;
 import com.example.demo.service.CalcScoreService;
 import com.example.demo.service.JankenService;
 import com.example.demo.service.JudgeWinLoseService;
@@ -24,11 +25,6 @@ public class JankenController {
 	@Autowired
 	private CalcScoreService calcScoreService;
 	
-	/** 定数宣言 **/
-	private static final int WIN = 1;
-	private static final int LOSE = -1;
-	private static final int DRAW = 0;
-	
 	//初期表示
 	@GetMapping("/")
 	public String index(Model model, HttpSession session) {
@@ -40,37 +36,45 @@ public class JankenController {
 	//画面から選択された手を受け取り、Modelに詰めて画面へ渡す
 	@PostMapping("/play")
 	public String play(@RequestParam("hand") String hand, Model model, HttpSession session) {
-		Hand userHand = Hand.fromString(hand);		//ユーザの手を取得（String型handを、fromStringメソッドでHand型に変換して取得）
-		Hand cpuHand = jankenService.getCpuHand();	//CPUの手を取得（getCpuHandメソッドでCPUの手を取得）
-		Integer nowScore = (Integer)session.getAttribute("score");	//セッションから現在のscoreを取得
-		int judgeResultNum = judgeWinLoseService.judgeWinLose(userHand, cpuHand);	//勝敗判定（ユーザーとCPUの手を渡して判定）
-		nowScore = calcScoreService.calcScore(nowScore, judgeResultNum);	//勝敗結果の値を渡して得点を取得
+		/* じゃんけんの手の取得*/
+		Hand userHand = Hand.fromString(hand);
+		Hand cpuHand = jankenService.getCpuHand();
+		/* セッションから現在のスコアを取得 */
+		Integer nowScore = (Integer)session.getAttribute("score");
+		/* 勝敗判定 */
+		int judgeResultNum = judgeWinLoseService.judgeWinLose(userHand, cpuHand);
+		/* スコア計算 */
+		nowScore = calcScoreService.calcScore(nowScore, judgeResultNum);
+		/* 現在のスコアをセット */
 		session.setAttribute("score", nowScore);
+		/* 得点にセット */
 		setupScore(model, session);
 		
-		String judgeResult = convertJudge(judgeResultNum);	//数値を文字列に変換
+		/* 勝敗判定の数値を文字列に変換 */
+		String judgeResult = convertJudge(judgeResultNum);
 		
 		model.addAttribute("hand", hand);
 		model.addAttribute("cpuHand", cpuHand);
 		model.addAttribute("judgeResult", judgeResult);
-		
 		
 		return "index";
 	}
 	
 	//数値を文字列に変換
 	public String convertJudge(int judgeResultNum) {
-		if(judgeResultNum == WIN) {
+		if(judgeResultNum == GameResult.WIN.getValue()) {
 			return "You Win";
-		}else if(judgeResultNum == LOSE) {
+		}else if(judgeResultNum == GameResult.LOSE.getValue()) {
 			return "You Lose";
 		}else {
 			return "Draw";
 		}
 	}
 	
+	/* リセットボタン押下処理 */
 	@PostMapping("/reset")
 	public String reset(HttpSession session) {
+		/* スコアを0に設定する */
 		session.setAttribute("score", 0);
 		return "redirect:/";
 	}

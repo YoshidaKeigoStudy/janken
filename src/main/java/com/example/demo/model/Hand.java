@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 /** じゃんけんの手の列挙 **/
-public enum Hand{	
+public enum Hand{
 	ROCK(0),
 	SCISSORS(1),
 	PAPER(2);

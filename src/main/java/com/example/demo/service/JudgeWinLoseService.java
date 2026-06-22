@@ -2,27 +2,25 @@ package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
 import com.example.demo.model.Hand;
+import com.example.demo.model.GameResult;
 
 @Service
 public class JudgeWinLoseService {
 	/** 定数宣言 **/
-	private static final int CONVERTNATURALNUM = 3;
-	private static final int WIN = 1;
-	private static final int LOSE = -1;
-	private static final int DRAW = 0;
+	private static final int CONVERT_NATURAL_NUM = 3;
 	
 	public int judgeWinLose(Hand userHand, Hand cpuHand) {
 		/** 渡されてきた手に対応する値(value)を取得 **/
 		int userNum = userHand.getValue();
 		int cpuNum = cpuHand.getValue();
-		int userMinusCpu = userNum - cpuNum + CONVERTNATURALNUM;	//ユーザの手とCPUの手の差を算出し、自然数に変換
+		int userMinusCpu = userNum - cpuNum + CONVERT_NATURAL_NUM;	//ユーザの手とCPUの手の差を算出し、自然数に変換
 		
 		if(userMinusCpu % 3 == 2) {
-			return WIN;
+			return GameResult.WIN.getValue();
 		}else if(userMinusCpu % 3 == 1) {
-			return LOSE;
+			return GameResult.LOSE.getValue();
 		}else {
-			return DRAW;
+			return GameResult.DRAW.getValue();
 		}
 	}
 }
