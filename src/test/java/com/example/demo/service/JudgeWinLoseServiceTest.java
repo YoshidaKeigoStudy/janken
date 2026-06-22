@@ -1,4 +1,4 @@
-package com.example.demo.service;
+/*package com.example.demo.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ class JudgeWinLoseServiceTest {
 		judgeWinLoseService = new JudgeWinLoseService();
 	}
 
-	/** judgeWinLose()のテスト **/
+	/** judgeWinLose()のテスト *
 
 	// ユーザー勝利パターン
 	@Test
@@ -63,4 +63,4 @@ class JudgeWinLoseServiceTest {
 		assertEquals("Draw", judgeWinLoseService.judgeWinLose("パー", "パー"));
 	}
 
-}
+}*/

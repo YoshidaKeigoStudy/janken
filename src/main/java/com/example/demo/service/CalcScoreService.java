@@ -1,19 +1,16 @@
 package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
+import com.example.demo.model.GameResult;
 
 @Service
 public class CalcScoreService{
-	private static final int WIN = 1;
-	private static final int LOSE = -1;
-	private static final int DRAW = 0;
+	private static final int WIN_POINT = 1;	//加算する得点
 	
-	private int score;
-	
-	public int calcScore(int judgeResultNum) {
-		if(judgeResultNum == WIN) {
-			score++;
+	public int calcScore(Integer nowScore, int judgeResultNum) {
+		if(judgeResultNum == GameResult.WIN.getValue()) {
+			nowScore += WIN_POINT;
 			}
-		return score;
+		return nowScore;
 	}
 }

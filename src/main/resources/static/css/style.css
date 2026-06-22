@@ -1,37 +1,77 @@
 /*ページ全体*/
 body{
     text-align:center;
-	background-color: aliceblue;
+	background-color: rgb(10, 10, 100);
 }
 
 /*タイトル、スコア表示エリア*/
 .header{
-    border:1px solid black;
+    border:1px solid white;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin:30px;
+	border-radius: 4px;/*角の丸み*/
+}
+
+/*タイトル*/
+.title{
+	color: #FFF;
+	text-align: left;
+	margin-left: 5px;
 }
 
 /*リセット*/
 .reset{
-	border:1px solid black;
-	padding:10px;
+	position: relative;
+	display: inline-block;
+	padding: 0.25em 0.5em;
+	text-decoration: none;
+	color: #FFF;
+	background: #fd9535;/*色*/
+	border-radius: 4px;/*角の丸み*/
+	box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+	font-weight: bold;
+	border: solid 2px #d27d00;/*線色*/
+	cursor: pointer;
+}
+.reset:active{
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.30);
 }
 
 /*header内のスコア表示*/
 .score{
-	border:1px solid black;
-    padding:10px;
+	border:1px solid white;
+	margin:5px;
+	background: white;
+	border-radius: 4px;/*角の丸み*/
+	height: 50px;
+	width: 80px;
+	padding:10px;
 }
 
 /*手を選択するエリア*/
 .game-area{
-    border:1px solid red;
+    border:1px solid white;
+	margin:30px;
+}
+
+/*結果表示エリア*/
+.result-box{
+	border:1px solid white;
+	margin:30px;
+	color: #FFF;
+	width: 180px;
+	text-align: left;
 }
 
 /*ルール表示エリア*/
 .footer{
-    border:1px solid blue;
+    border:1px solid white;
+	width:120px;
+	margin:30px;
+	border-radius: 4px;/*角の丸み*/
+	color: #FFF;
 }
 
 /*上段の手*/
