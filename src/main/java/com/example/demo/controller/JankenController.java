@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Hand;
 import com.example.demo.model.GameResult;
@@ -35,7 +36,7 @@ public class JankenController {
 	
 	//画面から選択された手を受け取り、Modelに詰めて画面へ渡す
 	@PostMapping("/play")
-	public String play(@RequestParam("hand") String hand, Model model, HttpSession session) {
+	public String play(@RequestParam("hand") String hand, RedirectAttributes redirectAttributes, HttpSession session) {
 		/* じゃんけんの手の取得*/
 		Hand userHand = Hand.valueOf(hand);
 		Hand cpuHand = jankenService.getCpuHand();
@@ -47,12 +48,10 @@ public class JankenController {
 		nowScore = calcScoreService.calcScore(nowScore, result);
 		/* 現在のスコアをセット */
 		session.setAttribute("score", nowScore);
-		/* 得点にセット */
-		setupScore(model, session);
 		
-		model.addAttribute("hand", userHand.getLabel());
-		model.addAttribute("cpuHand", cpuHand.getLabel());
-		model.addAttribute("judgeResult", result.getMessage());
+		redirectAttributes.addFlashAttribute("hand", userHand.getLabel());
+		redirectAttributes.addFlashAttribute("cpuHand", cpuHand.getLabel());
+		redirectAttributes.addFlashAttribute("judgeResult", result.getMessage());
 		
 		return "redirect:/";
 	}
