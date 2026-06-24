@@ -37,38 +37,24 @@ public class JankenController {
 	@PostMapping("/play")
 	public String play(@RequestParam("hand") String hand, Model model, HttpSession session) {
 		/* じゃんけんの手の取得*/
-		Hand userHand = Hand.fromString(hand);
+		Hand userHand = Hand.valueOf(hand);
 		Hand cpuHand = jankenService.getCpuHand();
 		/* セッションから現在のスコアを取得 */
-		Integer nowScore = (Integer)session.getAttribute("score");
+		int nowScore = getSessionAttribute(session, "score");
 		/* 勝敗判定 */
-		int judgeResultNum = judgeWinLoseService.judgeWinLose(userHand, cpuHand);
+		GameResult result = judgeWinLoseService.judgeWinLose(userHand, cpuHand);
 		/* スコア計算 */
-		nowScore = calcScoreService.calcScore(nowScore, judgeResultNum);
+		nowScore = calcScoreService.calcScore(nowScore, result);
 		/* 現在のスコアをセット */
 		session.setAttribute("score", nowScore);
 		/* 得点にセット */
 		setupScore(model, session);
 		
-		/* 勝敗判定の数値を文字列に変換 */
-		String judgeResult = convertJudge(judgeResultNum);
+		model.addAttribute("hand", userHand.getLabel());
+		model.addAttribute("cpuHand", cpuHand.getLabel());
+		model.addAttribute("judgeResult", result.getMessage());
 		
-		model.addAttribute("hand", hand);
-		model.addAttribute("cpuHand", cpuHand);
-		model.addAttribute("judgeResult", judgeResult);
-		
-		return "index";
-	}
-	
-	//数値を文字列に変換
-	public String convertJudge(int judgeResultNum) {
-		if(judgeResultNum == GameResult.WIN.getValue()) {
-			return "You Win";
-		}else if(judgeResultNum == GameResult.LOSE.getValue()) {
-			return "You Lose";
-		}else {
-			return "Draw";
-		}
+		return "redirect:/";
 	}
 	
 	/* リセットボタン押下処理 */
@@ -82,13 +68,19 @@ public class JankenController {
 	//今のscoreを取得し、null（初回）であればnowScoreを0に、そうでなければ現在のスコアを登録
 	private void setupScore(Model model, HttpSession session) {
 		//sessionが持つscoreを取得
-		Integer nowScore = (Integer)session.getAttribute("score");
-		//もし今のスコアがnullであれば初期表示のスコアを0にする
-		if(nowScore == null) {
-			nowScore = 0;
-			session.setAttribute("score", nowScore);
-		}
+		int nowScore = getSessionAttribute(session, "score");
 		model.addAttribute("score", nowScore);
+	}
+	
+	/* セッションから特定の値を取り出し、nullチェックをする */
+	private int getSessionAttribute(HttpSession session, String name) {
+		//sessionが持つscoreを取得
+		Integer sessionAttribute = (Integer)session.getAttribute(name);
+		//もし今の値がnullであれば初期表示のスコアを0にする
+		if(sessionAttribute == null) {
+			return 0;
+		}
+		return sessionAttribute;
 	}
 }
 

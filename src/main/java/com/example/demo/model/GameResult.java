@@ -1,17 +1,16 @@
 package com.example.demo.model;
 
 public enum GameResult{
-	WIN(1),
-	LOSE(-1),
-	DRAW(0);
-	private final int value;
+	WIN("You Win"),
+	LOSE("You Lose"),
+	DRAW("Draw");
+	private String message;
 	
-	//コンストラクタ
-	private GameResult(int value) {
-		this.value = value;
+	private GameResult(String message) {
+		this.message = message;
 	}
 	
-	public int getValue() {
-		return value;
+	public String getMessage() {
+		return message;
 	}
 }

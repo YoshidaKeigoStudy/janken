@@ -7,20 +7,20 @@ import com.example.demo.model.GameResult;
 @Service
 public class JudgeWinLoseService {
 	/** 定数宣言 **/
-	private static final int CONVERT_NATURAL_NUM = 3;
+	private static final int RESULT_PATTERN_NUM = 3;
 	
-	public int judgeWinLose(Hand userHand, Hand cpuHand) {
+	public GameResult judgeWinLose(Hand userHand, Hand cpuHand) {
 		/** 渡されてきた手に対応する値(value)を取得 **/
-		int userNum = userHand.getValue();
-		int cpuNum = cpuHand.getValue();
-		int userMinusCpu = userNum - cpuNum + CONVERT_NATURAL_NUM;	//ユーザの手とCPUの手の差を算出し、自然数に変換
+		int userNum = userHand.ordinal();
+		int cpuNum = cpuHand.ordinal();
+		int result = (userNum - cpuNum + RESULT_PATTERN_NUM) % RESULT_PATTERN_NUM;	//ユーザの手とCPUの手の差を算出し、自然数に変換
 		
-		if(userMinusCpu % 3 == 2) {
-			return GameResult.WIN.getValue();
-		}else if(userMinusCpu % 3 == 1) {
-			return GameResult.LOSE.getValue();
+		if(result == 2) {
+			return GameResult.WIN;
+		}else if(result == 1) {
+			return GameResult.LOSE;
 		}else {
-			return GameResult.DRAW.getValue();
+			return GameResult.DRAW;
 		}
 	}
 }
