@@ -15,12 +15,6 @@ public class JudgeWinLoseService {
 		int cpuNum = cpuHand.ordinal();
 		int result = (userNum - cpuNum + RESULT_PATTERN_NUM) % RESULT_PATTERN_NUM;	//ユーザの手とCPUの手の差を算出し、自然数に変換
 		
-		if(result == 2) {
-			return GameResult.WIN;
-		}else if(result == 1) {
-			return GameResult.LOSE;
-		}else {
-			return GameResult.DRAW;
-		}
+		return GameResult.getByResult(result);
 	}
 }
